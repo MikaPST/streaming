@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Lien{% endblock %}
+
+{% block body %}
+    <h1>Edit Lien</h1>
+
+    {{ include('lien/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a class="btn btn-primary" href="{{ path('lien_index') }}">back to list</a>
+
+    {{ include('lien/_delete_form.html.twig') }}
+{% endblock %}

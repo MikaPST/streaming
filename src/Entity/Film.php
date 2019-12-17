@@ -44,10 +44,24 @@ class Film
      */
     private $genre;
 
+    /**
+     * @ORM\JoinTable(name="acteurs_films")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Casting", inversedBy="filmsInterpretes")
+     */
+    private $acteurs;
+
+    /**
+     * @ORM\JoinTable(name="realisateurs_films")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Casting", inversedBy="filmsRealises")
+     */
+    private $realisateurs;
+
     public function __construct()
     {
         $this->liens = new ArrayCollection();
         $this->pays = new ArrayCollection();
+        $this->acteurs = new ArrayCollection();
+        $this->realisateurs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -76,7 +90,7 @@ class Film
     {
         $this->duree = $duree;
 
-        return $this;
+        return $this + "minutes :";
     }
 
     /**
@@ -144,6 +158,58 @@ class Film
     public function setGenre(?Genre $genre): self
     {
         $this->genre = $genre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Casting[]
+     */
+    public function getActeurs(): Collection
+    {
+        return $this->acteurs;
+    }
+
+    public function addActeur(Casting $acteur): self
+    {
+        if (!$this->acteurs->contains($acteur)) {
+            $this->acteurs[] = $acteur;
+        }
+
+        return $this;
+    }
+
+    public function removeActeur(Casting $acteur): self
+    {
+        if ($this->acteurs->contains($acteur)) {
+            $this->acteurs->removeElement($acteur);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Casting[]
+     */
+    public function getRealisateurs(): Collection
+    {
+        return $this->realisateurs;
+    }
+
+    public function addRealisateur(Casting $realisateur): self
+    {
+        if (!$this->realisateurs->contains($realisateur)) {
+            $this->realisateurs[] = $realisateur;
+        }
+
+        return $this;
+    }
+
+    public function removeRealisateur(Casting $realisateur): self
+    {
+        if ($this->realisateurs->contains($realisateur)) {
+            $this->realisateurs->removeElement($realisateur);
+        }
 
         return $this;
     }
